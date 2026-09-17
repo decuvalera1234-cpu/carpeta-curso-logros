@@ -12,4 +12,4 @@ print("El nombre del usuario es " + nombre_usuario)  # Concatena cadenas
 
 # f-string
 
-print(f"El nombre del usuario es {nombre_usuario} y tengo {edad} años")  # Usa f-string para formatear
+print(f"El nombre del usuario es {nombre_usuario} y tengo {edad} años")  
