@@ -204,7 +204,7 @@ if respuesta1 == 1:#listo alrederores
     else:#listo mensaje no valido para las rutas
         print("Opcion no validad, tu ruta a terminado con la destrución de tu mente")
 else:#listo mensaje no valido para las rutas
-        print("Opcion no validad, tu ruta a terminado con la destrución de tu mente")
+    print("Opcion no validad, tu ruta a terminado con la destrución de tu mente")
 
     
 
