@@ -75,7 +75,17 @@ if respuesta1 == 1: #listo alrederores
             print("caes al suelo y mueres Subaru Natsuki")      
         else: #listo mensaje no valido para las rutas
             print("Opcion no validad, tu ruta a terminado con la destrución de tu mente")  
-
+    elif respuesta2 == 2: # gritar por ayuda
+        print("Nadien viene")
+        print("Los ladrones se asustan y te atacan")
+        print("te apuñalan y mueres")
+        print("Retorno de muerte vuelves al inicio")
+    elif respuesta2 == 3: #hablar con los ladrones
+        print("Intentas hablar con los ladrones")
+        print("Los ladrones te ofenden")
+        print("terminan discutiendo y te atacan")
+        print("no logras escapar y te golpean tanto hasta que mueres")
+        print("Retorno de muerte vuelves al inicio")
     else:
         print("Opcion no validad, tu ruta a terminado con la destrución de tu mente")
 
@@ -166,6 +176,18 @@ elif respuesta1 == 2: #listo vendedor
                     print("caes al suelo y mueres Subaru Natsuki")      
                 else: #listo mensaje no valido para las rutas
                     print("Opcion no validad, tu ruta a terminado con la destrución de tu mente") 
+            elif respuesta4 == 2: # gritar por ayuda
+                print("Nadien viene")
+                print("Los ladrones se asustan y te atacan")
+                print("te apuñalan y mueres")
+                print("Retorno de muerte vuelves al inicio")
+            elif respuesta4 == 3: #hablar con los ladrones
+                print("Intentas hablar con los ladrones")
+                print("Los ladrones te ofenden")
+                print("terminan discutiendo y te atacan")
+                print("no logras escapar y te golpean tanto hasta que mueres")
+                print("Retorno de muerte vuelves al inicio")
+
             else: #listo mensaje no valido para las rutas
                 print("Opcion no validad, tu ruta a terminado con la destrución de tu mente")
                 
