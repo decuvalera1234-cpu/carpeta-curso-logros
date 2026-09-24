@@ -35,6 +35,33 @@ print(f"vaya tienes {edad}")
 print("--------------------------------------------")
 print(f"vives en {ciudad}")
 
+#practica 4
+for numero in range(100):
+    print(f"la multiplicacines es: {numero}")
+
+#practica 5
+nombre = "Profe metame a su familia de steam"
+for letras in nombre:
+    print (letras)
+
+#practica 6
+contador = 0
+while contador < 100:
+    print(contador+1)
+    contador += 1
+
+#practica 7
+contador = 0
+for contador in range(100):
+    print("hola pana")
+    if contador == 6:
+            continue
+            print("tengo plata")
+    print("no tengo plata")
+    
+contador+=1
+
+#practica 8
 
 
 
