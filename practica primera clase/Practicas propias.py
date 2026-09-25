@@ -38,7 +38,7 @@ print(f"vives en {ciudad}")
 #practica 4
 numero = 0
 for numeros in numero:
-    print(f"la multiplicacines es: {no in range(100):numeros+1}")
+    print(f"la multiplicacines es: {numeros+1}")
 
 #practica 5
 nombre = "Profe metame a su familia de steam"
