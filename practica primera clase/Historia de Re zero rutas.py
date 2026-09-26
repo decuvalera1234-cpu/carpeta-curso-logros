@@ -10,61 +10,61 @@ print("Siendo teletransportado a otro mundo de repente\n")
 # primera pregunta listo
 print("¿Qué haces primero?\n")
 print("OPCIONES: 1.VER ALREDEDORES | 2.HABLAR VENDEDOR | 3.QUEDARSE | 4.EXPLORAR CIUDAD")
-respuesta1 = input("Elige tu camino: ").strip().upper()
+respuesta1 = input("Elige tu camino: ").upper()
 
 if respuesta1 == "VER ALREDEDORES":
     #segunda pregunta Listo
     print("\nTe encuentras en un callejón sin salida y ves a tres ladrones.")
     print("OPCIONES: 1.LUCHAR | 2.GRITAR | 3.HABLAR | 4.HUIR")
-    respuesta2 = input("Elige tu camino: ").strip().upper()
+    respuesta2 = input("Elige tu camino: ").upper()
     
     if respuesta2 == "LUCHAR":
         #tercera pregunta Listo
         print("\nPeleas contra los ladrones. ¿A quién atacas primero?")
         print("OPCIONES: FLACO | GORDO | ENANO | DESARMADO")
-        respuesta3 = input("Elige tu camino: ").strip().upper()
+        respuesta3 = input("Elige tu camino: ").upper()
         
         if respuesta3 == "FLACO":
             #cuarta pregunta Listo
             print("\nLo golpeas desprevenido. Están aturdidos, ¿a quién atacas ahora?")
             print("OPCIONES: 1.GORDO | 2.ENANO | 3.ESCAPAR | 4.RENDERSE")
-            respuesta4 = input("Elige tu camino: ").strip().upper()
+            respuesta4 = input("Elige tu camino: ").upper()
             
             if respuesta4 == "GORDO":
                 #quinta pregunta Listo
                 print("\nDerribas al gordo. ¿Qué haces con el dinero que soltaron?")
                 print("OPCIONES: 1.ROBAR | 2.DEJARLO | 3.BUSCAR GUARDIA | 4.ESCONDERSE")
-                respuesta5 = input("Elige tu camino: ").strip().upper()
+                respuesta5 = input("Elige tu camino: ").upper()
                 
                 if respuesta5 == "ROBAR":
                     #sexta pregunta Listo
                     print("\nTe llevas el dinero. ¿A dónde vas ahora?")
                     print("OPCIONES: 1.PUEBLO | 2.MERCADO | 3.BOSQUE | 4.TABERNA")
-                    respuesta6 = input("Elige tu camino: ").strip().upper()
+                    respuesta6 = input("Elige tu camino: ").upper()
                     
                     if respuesta6 == "PUEBLO":
                         #sectima pregunta Listo
                         print("\nLlegas a un pueblo lejano. ¿En qué trabajas?")
                         print("OPCIONES: 1.CAMPESINO | 2.COMERCIANTE | 3.HERRERO | 4.PANADERO")
-                        respuesta7 = input("Elige tu camino: ").strip().upper()
+                        respuesta7 = input("Elige tu camino: ").upper()
                         
                         if respuesta7 == "CAMPESINO":
                             #octava pregunta Listo
                             print("\nCompras una parcela. ¿Qué vas a sembrar?")
                             print("OPCIONES: 1.MANZANAS | 2.TRIGO | 3.PAPAS | 4.FLORES")
-                            respuesta8 = input("Elige tu camino: ").strip().upper()
+                            respuesta8 = input("Elige tu camino: ").upper()
                             
                             if respuesta8 == "MANZANAS":
                                 #novena pregunta Listo
                                 print("\nTus manzanas son famosas. ¿A quién se las vendes?")
                                 print("OPCIONES: 1.NOBLES | 2.ALDEA | 3.VIAJEROS | 4.EJÉRCITO")
-                                respuesta9 = input("Elige tu camino: ").strip().upper()
+                                respuesta9 = input("Elige tu camino: ").upper()
                                 
                                 if respuesta9 == "NOBLES":
                                     #decima pregunta Listo
                                     print("\nUn noble te hace una oferta para comprar toda tu granja.")
                                     print("OPCIONES: 1.ACEPTAR | 2.RECHAZAR | 3.NEGOCIAR | 4.RETIRARSE")
-                                    respuesta10 = input("Elige tu camino: ").strip().upper()
+                                    respuesta10 = input("Elige tu camino: ").upper()
                                     
                                     if respuesta10 == "ACEPTAR":
                                         print("\nFin feliz: Te vuelves rico vendiendo tu granja y vives una vida tranquila.")
