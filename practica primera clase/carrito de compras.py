@@ -1,34 +1,31 @@
-#mensaje de saludo
-print("-----------------------------------------")
-print("Hola iniciamos tus compras mala paga")
-print("Mira que no tengo cashea")
-print("-----------------------------------------\n")
+#Definir variables
 
-print("dime que quieres hacer primero 1 al 5\n")
+compras = []
+precios = []
+total = 0
 
-print("" + "-"*30)
-print("   🛒 MENÚ DE LA CESTA 🛒")
-print("-"*30)
-print("1. AGREGAR un nuevo elemento   ➕")
-print("2. MOSTRAR la cesta          🧺")
-print("3. ELIMINAR un elemento      ❌")
-print("4. CALCULAR el total         💰")
-print("5. RENUNCIAR / Salir         👋")
-print("-"*30)
+print("Tienda tu Corazon es mio")
+while True:
+    producto=str(input("Dime que producto vas a llevar si ya terminaste coloca q: ")).lower()
+   
+    if producto == "q":
+        break
+    
+    else:
 
-respuesta = int(input())
-if respuesta == 1:
-    print("\nDime que elemento quieres agregar")
-    producto = str (input("Colcame aqui que producto quieres agregar: "))
-    price = float(input("Dime el precio del producto: "))
+        precio = float(input(f"Que precio tiene el producto {producto}: "))
+        compras.append(producto)
+        precios.append(precio)
+print("="*50)
+print("="*5,"Esta es Tu Cesta de inventario pasa por la caja","="*5)
 
-
-
-
-
-
-
-
+for productos,precio in zip(compras, precios):
+    print(" "*18, f"{productos}: {precio:.2f}")
+    print("="*50)
+for precio in precios:
+    total += precio
+print(" "*18, f"Total: {total:.2f}")
+print("="*52)
 
 
 
