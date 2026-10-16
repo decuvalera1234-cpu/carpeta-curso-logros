@@ -1,0 +1,52 @@
+.cajaprincipal{
+    background-color: aqua;
+    width: 100%;
+    height: 700px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    
+    padding-left: 10px;
+    padding-right: 10px;
+
+
+}
+
+.cajacontenido{
+    background-color: blue;
+    width: 60%;  
+    height: 80%;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.cajapublicidad{
+    background-color: rgb(228, 87, 87);
+    width: 400px;
+    height: 80%;
+    
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    
+    
+}
+
+.bloquedeopcion{
+    background-color: black;
+    width: 100%;
+    height: 100px;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+
+div{
+    display: flex;
+}
+body{
+    background-color: blueviolet
+}
