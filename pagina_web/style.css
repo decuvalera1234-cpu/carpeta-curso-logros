@@ -1,0 +1,141 @@
+body {
+    background-color: #121212; 
+    margin: 0;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* El contenedor principal que alinea la imagen y la barra en fila */
+.top-bar {
+    display: flex;
+    align-items: center;     /* Centra la barra y la imagen a la misma altura */
+    gap: 20px;               /* Espacio de separación entre la imagen y la barra */
+    width: 85%;
+    max-width: 1000px;
+    margin: 0 auto;          /* Centra todo el bloque en el medio de la pantalla */
+}
+
+/* Estilo para la imagen del caballero con la espada */
+.knight-img {
+    height: 75px;            
+    width: auto;             
+    border-radius: 50%;     
+    flex-shrink: 0;        
+}
+
+/* Contenedor de la barra de búsqueda */
+.search-box {
+    display: flex;
+    flex: 1;                 /* Hace que la barra ocupe todo el espacio sobrante a la derecha */
+    background: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 25px;
+    padding: 10px 20px;
+}
+
+/* Campo de texto */
+.search-box input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 16px;
+}
+
+/* Botón de búsqueda */
+.search-box button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Contenedor que junta el texto y la imagen en una misma fila */
+.seccion-texto-imagen {
+    display: flex;          /* Pone el texto y la imagen lado a lado */
+    text-align: justify;
+    align-items: center;    
+    margin-left: 40px;              /* Espacio de separación entre el texto y la imagen */
+    width: 85%;
+    max-width: 1000px;
+    margin: 50px auto;      /* Centra todo el bloque en el medio de la pantalla */
+}
+
+/* Configuración del bloque de texto */
+.bloque-texto {
+    flex: 1;                /* Hace que el texto ocupe todo el espacio sobrante a la izquierda */
+    color: white;          
+    font-size: 18px;
+    line-height: 1.6;       /* Separa un poco las líneas de texto para que sea legible */
+}
+
+/* Configuración de la imagen a la derecha */
+.imagen-derecha {
+    width: 350px;           
+    height: auto;          
+    border-radius: 12px;   
+    flex-shrink: 0;        
+    box-shadow: 0 4px 15px rgba(80, 99, 201, 0.777); 
+    margin-left: 35px;
+}
+
+.imagen-izquierda {
+    width: 350px;
+    height: auto;
+    border-radius: 12px;
+    flex-shrink: 0; /* Evita que se deforme */
+    box-shadow: 0 4px 15px rgba(242, 106, 1, 0.5);
+    margin-right: 35px;
+}
+
+.imagen-derecha-2{
+    width: 350px;
+    height: auto;
+    border-radius: 12px;
+    flex-shrink: 0; 
+    box-shadow: 0 4px 15px rgba(161, 159, 159, 0.752);
+    margin-left: 35px;
+}
+
+.imagen-izquierda-2{
+  width: 350px;
+    height: auto;
+    border-radius: 12px;
+    flex-shrink: 0; 
+    box-shadow: 0 4px 15px rgba(220, 201, 201, 0.918);
+    margin-right: 35px;
+}
+
+.Titulo {
+    text-align: center;
+    color: white;
+}
+
+.imagen-derecha-3 {
+  width: 350px;
+    height: auto;
+    border-radius: 12px;
+    flex-shrink: 0; 
+    box-shadow: 0 4px 15px rgba(245, 234, 76, 0.859);
+    margin-left: 35px;
+}
+
+.madre-seda {
+    width: 350px;
+    height: auto;
+    border-radius: 12px;
+    flex-shrink: 0; 
+    box-shadow: 0 4px 15px rgba(124, 180, 218, 0.918);
+    margin-right: 35px;
+}
+
+
+/*
+colocar animacion, scroll, colocar scrip, 
+musica de fondo de pagina con controlador de volumen, links dinamicos, sub paginas (opcional).
+
+link para video de fondo:
+https://www.youtube.com/watch?v=xZOzVq7X-b8
+
+/*
