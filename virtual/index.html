@@ -403,6 +403,36 @@
       .polaroid { animation: none; }
     }
 
+    /* ============ OJITO (ocultar / mostrar fotos) ============ */
+    #btn-ojito {
+      position: fixed;
+      top: 1.5vh;
+      left: 2.5vw;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 212, 153, .55);
+      background: rgba(13, 19, 33, .78);
+      color: var(--dorado);
+      font-size: 19px;
+      cursor: pointer;
+      z-index: 12;                 /* siempre encima de las fotos */
+      box-shadow: 0 6px 18px var(--sombra);
+      transition: transform .25s ease, background .25s ease;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+    #btn-ojito:hover { transform: scale(1.1); }
+    #btn-ojito:active { transform: scale(.88); }
+    /* fotos ocultas: las polaroids se desvanecen */
+    #scene-letter.fotos-ocultas #fotos { opacity: 0 !important; }
+    #scene-letter.fotos-ocultas #btn-ojito { background: rgba(230, 57, 70, .25); }
+
+    @media (max-width: 640px) {
+      #btn-ojito { width: 38px; height: 38px; font-size: 16px; top: 1vh; left: 2vw; }
+    }
+
     .letter-cursor { text-align: center; }
 
     .letter-content h2 {
@@ -521,6 +551,9 @@ Gracias a ti, hoy tengo mejores metas que antes; gracias a ti, soy mucho más fe
       <div class="polaroid" id="p-pulgar"><img src="pulgar.jpg" alt=""></div>
       <div class="polaroid" id="p-fotito"><img src="fotito.jpeg" alt=""></div>
     </div>
+
+    <!-- 👁️ ojito para ocultar/mostrar las fotos -->
+    <button id="btn-ojito" title="Ocultar fotos" aria-label="Ocultar o mostrar las fotos">👁️</button>
     <p class="hint">👆 Toca el sobre para abrirlo</p>
   </section>
 
@@ -686,6 +719,14 @@ Gracias a ti, hoy tengo mejores metas que antes; gracias a ti, soy mucho más fe
       }, 950);
     }
     envelope.addEventListener("click", abrirSobre);
+
+    /* ============ OJITO · ocultar/mostrar las fotos ============ */
+    const btnOjito = document.getElementById("btn-ojito");
+    btnOjito.addEventListener("click", () => {
+      const oculto = sceneC.classList.toggle("fotos-ocultas");
+      btnOjito.textContent = oculto ? "🙈" : "👁️";
+      btnOjito.title = oculto ? "Mostrar fotos" : "Ocultar fotos";
+    });
   </script>
 </body>
 </html>
