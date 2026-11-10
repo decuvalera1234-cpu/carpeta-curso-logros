@@ -404,10 +404,14 @@
     }
 
     /* ============ OJITO (ocultar / mostrar fotos) ============ */
+    /* fila del título: [ojito] [Para ti 💌] [equilibrio] — el título sigue centrado */
+    .titulo-fila {
+      display: grid;
+      grid-template-columns: 46px 1fr 46px;
+      align-items: center;
+    }
     #btn-ojito {
-      position: fixed;
-      top: 1.5vh;
-      left: 2.5vw;
+      justify-self: start;
       width: 46px;
       height: 46px;
       border-radius: 50%;
@@ -416,7 +420,7 @@
       color: var(--dorado);
       font-size: 19px;
       cursor: pointer;
-      z-index: 12;                 /* siempre encima de las fotos */
+      z-index: 12;
       box-shadow: 0 6px 18px var(--sombra);
       transition: transform .25s ease, background .25s ease;
       display: grid;
@@ -430,7 +434,8 @@
     #scene-letter.fotos-ocultas #btn-ojito { background: rgba(230, 57, 70, .25); }
 
     @media (max-width: 640px) {
-      #btn-ojito { width: 38px; height: 38px; font-size: 16px; top: 1vh; left: 2vw; }
+      .titulo-fila { grid-template-columns: 34px 1fr 34px; }
+      #btn-ojito { width: 34px; height: 34px; font-size: 15px; }
     }
 
     .letter-cursor { text-align: center; }
@@ -530,7 +535,11 @@
                Cambia SOLO los párrafos <p> de abajo.
                Puedes agregar o quitar párrafos: copia <p>Tu texto</p>
                ================================================================ -->
-          <h2>Para ti 💌</h2>
+          <div class="titulo-fila">
+            <button id="btn-ojito" title="Ocultar fotos" aria-label="Ocultar o mostrar las fotos">👁️</button>
+            <h2>Para ti 💌</h2>
+            <span></span>
+          </div>
           <p>No es mucho pero es algo amor</p>
           <p>Quiero que sepas que te amo muchísimo y que eres lo mejor que me ha pasado en la vida. A veces, en mis pensamientos, me pregunto si realmente te merezco, pero lo que sí sé con absoluta certeza es cuánto te amo y cuánto te quiero.
 Gracias a ti, hoy tengo mejores metas que antes; gracias a ti, soy mucho más feliz. No tengo palabras suficientes para agradecerte por todo tu tiempo, por tu amor y por estar siempre ahí. Eres, sin duda, lo mejor que la vida me ha regalado.</p>
@@ -551,9 +560,6 @@ Gracias a ti, hoy tengo mejores metas que antes; gracias a ti, soy mucho más fe
       <div class="polaroid" id="p-pulgar"><img src="pulgar.jpg" alt=""></div>
       <div class="polaroid" id="p-fotito"><img src="fotito.jpeg" alt=""></div>
     </div>
-
-    <!-- 👁️ ojito para ocultar/mostrar las fotos -->
-    <button id="btn-ojito" title="Ocultar fotos" aria-label="Ocultar o mostrar las fotos">👁️</button>
     <p class="hint">👆 Toca el sobre para abrirlo</p>
   </section>
 
