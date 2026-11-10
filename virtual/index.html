@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Me amas? 💌</title>
+  <style>
+    /* ==========================================================
+       PALETA  ·  Oscuro + Rojo intenso
+       Fondo: #0d1321 (azul-marino casi negro)
+       Acentos: #e63946 (rojo) · #d90429 (rojo intenso)
+       Detalles: #ffd499 (dorado suave) · #fce6e6 (blanco cálido)
+       ========================================================== */
+    :root {
+      --bg-1: #0d1321;
+      --bg-2: #1b263b;
+      --rojo: #e63946;
+      --rojo-intenso: #d90429;
+      --dorado: #ffd499;
+      --crema: #fce6e6;
+      --sombra: rgba(0, 0, 0, .55);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", "Trebuchet MS", Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-1));
+      background-size: 300% 300%;
+      animation: fondo 14s ease infinite;
+    }
+
+    @keyframes fondo {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ============ DECORACIÓN · corazones flotando por todos lados ============ */
+    #bg-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .flota {
+      position: absolute;
+      bottom: -60px;
+      width: 28px;
+      height: 28px;
+      background: var(--rojo);
+      opacity: .5;
+      animation: subir var(--d, 12s) linear infinite;
+    }
+    .flota::before, .flota::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: inherit;
+    }
+    .flota::before { top: -50%; left: 0; }
+    .flota::after  { top: 0; left: 50%; }
+    .flota {
+      transform: rotate(-45deg);
+      animation-name: subir, latir;
+    }
+    @keyframes subir {
+      0%   { bottom: -60px; opacity: 0; }
+      10%  { opacity: .55; }
+      90%  { opacity: .35; }
+      100% { bottom: 110vh; opacity: 0; }
+    }
+    @keyframes latir {
+      0%, 100% { scale: 1; }
+      50% { scale: 1.25; }
+    }
+
+    /* coronitas de brillo en las orillas */
+    .twinkle {
+      position: fixed;
+      color: var(--dorado);
+      font-size: 16px;
+      pointer-events: none;
+      z-index: 0;
+      animation: brillar 2.6s ease-in-out infinite;
+    }
+    @keyframes brillar {
+      0%, 100% { opacity: .15; transform: scale(.7) rotate(0deg); }
+      50% { opacity: .95; transform: scale(1.25) rotate(20deg); }
+    }
+
+    /* ============ ESCENAS ============ */
+    .scene {
+      position: fixed;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      padding: 24px;
+      text-align: center;
+      animation: aparecer .8s ease both;
+    }
+    .scene.active { display: flex; }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============ ESCENA 1 · la pregunta ============ */
+    .question {
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      color: var(--crema);
+      text-shadow: 0 4px 24px var(--sombra);
+      margin-bottom: 8px;
+    }
+    .question span { color: var(--rojo); }
+
+    .sub {
+      color: #b8c3d9;
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      margin-bottom: 40px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: clamp(24px, 8vw, 70px);
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      padding: 14px 36px;
+      border-radius: 999px;
+      color: #fff;
+      transition: transform .25s, box-shadow .25s, font-size .25s, padding .25s;
+      box-shadow: 0 8px 26px var(--sombra);
+    }
+    .btn:active { transform: scale(.94); }
+
+    #btn-yes {
+      background: linear-gradient(135deg, var(--rojo), var(--rojo-intenso));
+      animation: pulse-si 1.6s ease-in-out infinite;
+    }
+    #btn-no {
+      background: linear-gradient(135deg, #3a4a6b, #22304d);
+      opacity: .85;
+    }
+
+    @keyframes pulse-si {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, .55); }
+      50% { box-shadow: 0 0 0 18px rgba(230, 57, 70, 0); }
+    }
+
+    /* el botón "No" viaja por la pantalla -> fijo con JS */
+    #btn-no.viajero {
+      position: fixed;
+      z-index: 10;
+      transition: left .3s cubic-bezier(.3,1.6,.5,1), top .3s cubic-bezier(.3,1.6,.5,1);
+    }
+
+    /* burbuja de mensajes dramáticos */
+    .bubble {
+      position: fixed;
+      left: 50%;
+      bottom: 12vh;
+      transform: translateX(-50%);
+      max-width: min(88vw, 420px);
+      background: var(--crema);
+      color: var(--bg-1);
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px var(--sombra);
+      z-index: 20;
+      animation: burbuja .35s cubic-bezier(.3,1.6,.5,1) both;
+    }
+    .bubble::after {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 10px solid transparent;
+      border-bottom-color: var(--crema);
+      border-top: none;
+    }
+    .bubble.oculta { display: none; }
+    @keyframes burbuja {
+      from { opacity: 0; transform: translateX(-50%) translateY(14px) scale(.8); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+
+    /* ============ ESCENA 2 · mensaje de amor ============ */
+    .big-msg {
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      font-size: clamp(1.8rem, 6.5vw, 3.4rem);
+      color: var(--crema);
+      line-height: 1.35;
+      animation: latir-msg 1s ease-in-out infinite;
+    }
+    .big-msg strong { color: var(--rojo); }
+    @keyframes latir-msg {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    .btn-continuar {
+      margin-top: 44px;
+      background: linear-gradient(135deg, var(--rojo), var(--rojo-intenso));
+      animation: aparecer 1.4s ease .6s both, pulse-si 1.6s ease-in-out 2s infinite;
+    }
+
+    /* ============ ESCENA 3 · sobre + carta ============ */
+    #envelope-wrap { position: relative; }
+
+    .envelope {
+      position: relative;
+      width: min(330px, 82vw);
+      height: 210px;
+      cursor: pointer;
+      transition: transform .3s;
+    }
+    .envelope:hover { transform: scale(1.04); }
+
+    .pocket, .flap, .letter-paper { position: absolute; left: 0; width: 100%; }
+
+    .pocket {
+      bottom: 0;
+      height: 100%;
+      background: linear-gradient(160deg, #7d1f2d, #5a1520);
+      border-radius: 8px;
+      z-index: 3;
+      clip-path: polygon(0 0, 50% 42%, 100% 0, 100% 100%, 0 100%);
+      box-shadow: 0 14px 34px var(--sombra);
+    }
+
+    .flap {
+      top: 0;
+      height: 62%;
+      background: linear-gradient(180deg, #a52a3a, #7d1f2d);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform .7s ease, z-index 0s .35s;
+      z-index: 4;
+      border-radius: 8px 8px 0 0;
+    }
+    .envelope.abierta .flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .seal {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      translate: -50% -50%;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 30%, #ff6b6b, var(--rojo-intenso));
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      z-index: 5;
+      box-shadow: 0 4px 14px var(--sombra);
+      transition: opacity .4s, scale .4s;
+      animation: seal-pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes seal-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(217, 4, 41, .5); }
+      50% { box-shadow: 0 0 0 14px rgba(217, 4, 41, 0); }
+    }
+    .envelope.abierta .seal { opacity: 0; scale: 1.6; pointer-events: none; }
+
+    .letter-paper {
+      bottom: 8px;
+      width: 88%;
+      left: 6%;
+      height: 175px;
+      overflow: hidden;
+      background: var(--crema);
+      border-radius: 6px;
+      z-index: 2;
+      transform: translateY(0);
+      transition: transform .9s ease, width .9s ease, left .9s ease, height .9s ease, border-radius .9s;
+      padding: 22px 20px 30px;
+      box-shadow: 0 -4px 20px var(--sombra);
+    }
+    /* al abrir: la carta sube saliendo del sobre */
+    .envelope.abierta .letter-paper {
+      transform: translateY(-105%);
+      z-index: 6;
+    }
+    /* al expandir: la carta se clava al centro, firme, con una sola transición */
+    .envelope.abierta .letter-paper.expandida {
+      position: fixed;
+      height: auto;
+      bottom: auto;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(680px, 92vw);
+      max-height: 82vh;
+      min-height: 320px;
+      overflow-y: auto;
+      z-index: 8;
+      transition: opacity .4s ease, transform .4s ease;
+      transform-origin: center center;
+    }
+    #scene-letter.expandida-final .pocket,
+    #scene-letter.expandida-final .flap {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .6s;
+    }
+    #scene-letter.expandida-final .hint {
+      opacity: 0;
+      transition: opacity .5s;
+    }
+
+    /* ============ FOTOS DECORATIVAS (polaroids) ============ */
+    #fotos {
+      position: fixed;
+      inset: 0;
+      z-index: 5;              /* debajo de la carta (z 8): jamás la tapan */
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1s ease .25s;
+    }
+    #scene-letter.expandida-final #fotos { opacity: 1; }
+
+    .polaroid {
+      position: fixed;
+      background: var(--crema);
+      padding: 5px 5px 14px;
+      border-radius: 5px;
+      box-shadow: 0 12px 32px var(--sombra);
+      rotate: var(--r, 0deg);
+      animation: balancear var(--d, 5s) ease-in-out infinite;
+    }
+    /* corazoncito de "cinta" */
+    .polaroid::after {
+      content: "❤️";
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      translate: -50% 0;
+      rotate: 12deg;
+      font-size: 15px;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
+    }
+    .polaroid img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+
+    /* 🐝 la abejita + su fotito van SOBRE la carta (collage en la esquina) */
+    #p-abejita   { top: 3vh;  right: 2.5vw; width: 150px; --r: 4deg;  --d: 5.2s; z-index: 10; }
+    #p-abejita img { aspect-ratio: 1 / 1; }
+    #p-recuerdo  { top: 11vh; right: 11.5vw; width: 92px; --r: -9deg; --d: 4.4s; z-index: 11; }
+    #p-recuerdo img { aspect-ratio: 3 / 4; }
+
+    /* las demás, repartidas bonito */
+    #p-risita  { top: 32vh; left: 2vw;  width: 128px; --r: -5deg; --d: 5.6s; }
+    #p-risita img  { aspect-ratio: 4 / 5; }
+    #p-pulgar  { bottom: 5vh; left: 4vw;  width: 118px; --r: 3deg;  --d: 4.8s; }
+    #p-pulgar img  { aspect-ratio: 4 / 5; }
+    #p-fotito  { bottom: 6vh; right: 4vw; width: 118px; --r: -4deg; --d: 5s; }
+    #p-fotito img  { aspect-ratio: 4 / 5; }
+
+    @keyframes balancear {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -9px; }
+    }
+
+    /* en celular: la esquina y tamaño se acoplan a pantallas pequeñas */
+    @media (max-width: 640px) {
+      .polaroid { padding: 4px 4px 10px; }
+      .polaroid::after { font-size: 12px; top: -9px; }
+      #p-abejita  { width: 92px; top: 2vh; right: 1vw; }
+      #p-recuerdo { width: 62px; top: 5vh; right: 26vw; }
+      #p-risita   { width: 78px; top: 35vh; left: 1vw; }
+      #p-pulgar   { width: 70px; bottom: 4vh; left: 2vw; }
+      #p-fotito   { width: 70px; bottom: 4vh; right: 2vw; }
+    }
+    @media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+      .polaroid { animation: none; }
+    }
+
+    .letter-cursor { text-align: center; }
+
+    .letter-content h2 {
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      color: var(--rojo-intenso);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      margin-bottom: 16px;
+    }
+    .letter-content p {
+      color: #4a1d24;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1rem, 2.6vw, 1.15rem);
+      line-height: 1.7;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .signature {
+      text-align: right !important;
+      font-style: italic;
+      color: var(--rojo) !important;
+    }
+
+    .hint {
+      color: #b8c3d9;
+      margin-top: 34px;
+      font-size: .95rem;
+      animation: brillar 2.6s ease-in-out infinite;
+    }
+
+    /* ============ LLUVIA DE CORAZONES (al decir Sí) ============ */
+    .rain {
+      position: fixed;
+      top: -50px;
+      width: 22px;
+      height: 22px;
+      background: var(--rojo);
+      z-index: 15;
+      pointer-events: none;
+      animation: caer var(--d, 4s) linear forwards;
+    }
+    .rain::before, .rain::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: inherit;
+    }
+    .rain::before { top: -50%; left: 0; }
+    .rain::after  { top: 0; left: 50%; }
+    .rain { transform: rotate(-45deg); }
+    @keyframes caer {
+      0% { top: -50px; opacity: 1; rotate: -45deg; left: var(--x); }
+      50% { rotate: 22deg; }
+      100% { top: 110vh; opacity: .2; rotate: -70deg; left: calc(var(--x) * 1.08); }
+    }
+
+    @media (max-width: 480px) {
+      .buttons { flex-direction: column; height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎀 decoración de fondo: corazones flotando + brillos -->
+  <div id="bg-hearts" aria-hidden="true"></div>
+
+  <!-- ===== ESCENA 1 · LA PREGUNTA ===== -->
+  <section id="scene-question" class="scene active">
+    <h1 class="question">¿Me <span>amas</span>?</h1>
+    <p class="sub">Piénsalo bien... tu respuesta define tu destino 😳</p>
+    <div class="buttons">
+      <button class="btn" id="btn-yes">Sí ❤️</button>
+      <button class="btn" id="btn-no">No 💔</button>
+    </div>
+  </section>
+
+  <!-- ===== ESCENA 2 · MENSAJE DE AMOR ===== -->
+  <section id="scene-loved" class="scene">
+    <div class="big-msg">¡Sabía que me amas mucho, mucho, <strong>MUCHO</strong>! ❤️<br>Aquí va tu carta...</div>
+    <button class="btn btn-continuar" id="btn-continuar">Abrir mi carta 💌</button>
+  </section>
+
+  <!-- ===== ESCENA 3 · LA CARTA VIRTUAL ===== -->
+  <section id="scene-letter" class="scene">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="pocket"></div>
+
+      <!-- 💌 EL SOBRE SE ABRE Y LA CARTA SALE -->
+      <div class="letter-paper" id="letter-paper">
+        <div class="letter-content">
+          <!-- ================================================================
+               ✏️  ESCRIBE TU MENSAJE AQUÍ  ✏️
+               Cambia SOLO los párrafos <p> de abajo.
+               Puedes agregar o quitar párrafos: copia <p>Tu texto</p>
+               ================================================================ -->
+          <h2>Para ti 💌</h2>
+          <p>No es mucho pero es algo amor</p>
+          <p>Quiero que sepas que te amo muchísimo y que eres lo mejor que me ha pasado en la vida. A veces, en mis pensamientos, me pregunto si realmente te merezco, pero lo que sí sé con absoluta certeza es cuánto te amo y cuánto te quiero.
+Gracias a ti, hoy tengo mejores metas que antes; gracias a ti, soy mucho más feliz. No tengo palabras suficientes para agradecerte por todo tu tiempo, por tu amor y por estar siempre ahí. Eres, sin duda, lo mejor que la vida me ha regalado.</p>
+          <p>Gracias por amarme y querer darme tu tiempo.❤️</p>
+          <!-- ================= fin del espacio editable ================= -->
+          <p class="signature">— Con todo mi amor te digo estas palabras ❤️</p>
+        </div>
+      </div>
+
+      <div class="seal" id="seal">❤️</div>
+    </div>
+
+    <!-- 📸 fotos decorativas que aparecen al abrir la carta -->
+    <div id="fotos" aria-hidden="true">
+      <div class="polaroid" id="p-abejita"><img src="abejita.jpg" alt=""></div>
+      <div class="polaroid" id="p-recuerdo"><img src="para_la_abejitas.jpg" alt=""></div>
+      <div class="polaroid" id="p-risita"><img src="risita.jpg" alt=""></div>
+      <div class="polaroid" id="p-pulgar"><img src="pulgar.jpg" alt=""></div>
+      <div class="polaroid" id="p-fotito"><img src="fotito.jpeg" alt=""></div>
+    </div>
+    <p class="hint">👆 Toca el sobre para abrirlo</p>
+  </section>
+
+  <div id="rain-zone" aria-hidden="true"></div>
+
+  <script>
+    /* ============ DECORACIÓN · generar corazones y brillos ============ */
+    const zona = document.getElementById("bg-hearts");
+    const colores = ["#ff4d6d", "#e63946", "#d90429", "#ff8fa3"];
+
+    for (let i = 0; i < 16; i++) {
+      const h = document.createElement("div");
+      h.className = "flota";
+      h.style.left = (Math.random() * 96) + "vw";
+      h.style.setProperty("--d", (9 + Math.random() * 10) + "s");
+      h.style.animationDelay = (-Math.random() * 14) + "s";
+      h.style.background = colores[i % colores.length];
+      const s = 16 + Math.random() * 26;
+      h.style.width = h.style.height = s + "px";
+      h.style.marginLeft = -(s / 2) + "px";
+      zona.appendChild(h);
+    }
+
+    // brillos dorados por los bordes
+    for (let i = 0; i < 14; i++) {
+      const t = document.createElement("span");
+      t.className = "twinkle";
+      t.textContent = "✦";
+      t.style.left = (Math.random() * 98) + "vw";
+      t.style.top = (Math.random() * 98) + "vh";
+      t.style.animationDelay = (Math.random() * 2.6) + "s";
+      t.style.fontSize = (10 + Math.random() * 14) + "px";
+      document.body.appendChild(t);
+    }
+
+    /* ============ ESCENAS ============ */
+    const sceneQ = document.getElementById("scene-question");
+    const sceneL = document.getElementById("scene-loved");
+    const sceneC = document.getElementById("scene-letter");
+    const irA = (escena) => {
+      document.querySelectorAll(".scene").forEach(s => s.classList.remove("active"));
+      escena.classList.add("active");
+    };
+
+    /* ============ BOTÓN "SÍ" · mensaje + lluvia de corazones + carta ============ */
+    const btnYes = document.getElementById("btn-yes");
+
+    btnYes.addEventListener("click", () => {
+      ocultarBurbuja();
+      btnNo.classList.remove("viajero");
+      irA(sceneL);
+      lluviaDeCorazones(45);
+    });
+
+    const btnContinuar = document.getElementById("btn-continuar");
+    btnContinuar.addEventListener("click", () => {
+      irA(sceneC);
+      lluviaDeCorazones(20);
+    });
+
+    function lluviaDeCorazones(cantidad) {
+      const rz = document.getElementById("rain-zone");
+      for (let i = 0; i < cantidad; i++) {
+        const c = document.createElement("div");
+        c.className = "rain";
+        c.style.setProperty("--x", (Math.random() * 100) + "vw");
+        c.style.setProperty("--d", (2.5 + Math.random() * 3) + "s");
+        c.style.background = colores[i % colores.length];
+        const s = 12 + Math.random() * 22;
+        c.style.width = c.style.height = s + "px";
+        c.style.animationDelay = (Math.random() * 1.4) + "s";
+        rz.appendChild(c);
+        setTimeout(() => c.remove(), 7000);
+      }
+    }
+
+    /* ============ BOTÓN "NO" · huye + mensajes de drama ============ */
+    const btnNo = document.getElementById("btn-no");
+    let intentos = 0;
+    let bubble = null;
+    let bubbleTimer = null;
+
+    const mensajesNo = [
+      "¿Por qué no me amas? 😢",
+      "¿Segurita que no? 🥺",
+      "Piénsalo bien... aún tienes tiempo 💭",
+      "Mi corazón se rompe 💔",
+      "¿Cómo puedes decir no a esta carita? 😭",
+      "El botón de Sí es más bonito, ¿lo viste? 😏",
+      "Vaya... qué dramático, ¿no? 😤",
+      "Cada intento me parte el corazón 💔",
+      "Ya casi... dale al rojo, es el rojo ❤️",
+      "¡Última oportunidad! 👀",
+      "Bueno... sapa la que dice no 🐸",
+      "No me canso, sigues amándome y lo sabes 😌"
+    ];
+
+    function mostrarBurbuja(texto) {
+      if (bubble) bubble.remove();
+      clearTimeout(bubbleTimer);
+      bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.textContent = texto;
+      document.body.appendChild(bubble);
+      bubbleTimer = setTimeout(ocultarBurbuja, 2200);
+    }
+    function ocultarBurbuja() {
+      if (bubble) { bubble.remove(); bubble = null; }
+    }
+
+    // posición aleatoria evitando los bordes y el botón "Sí"
+    function huir() {
+      intentos++;
+
+      // mensajes que suben de tono conforme insiste
+      const idx = Math.min(intentos - 1, mensajesNo.length - 1);
+      mostrarBurbuja(mensajesNo[idx]);
+
+      // el botón Sí crece, el No se achica 🙃
+      const extra = Math.min(intentos * 0.08, 1.2);
+      btnYes.style.transform = "scale(" + (1 + extra) + ")";
+      btnYes.style.padding = (14 + intentos * 1.5) + "px " + (36 + intentos * 4) + "px";
+      btnNo.style.scale = Math.max(.55, 1 - intentos * .05);
+
+      // mover
+      btnNo.classList.add("viajero");
+      const w = btnNo.offsetWidth || 110;
+      const h = btnNo.offsetHeight || 48;
+      const alto = window.innerHeight, ancho = window.innerWidth;
+      let nx, ny, choca;
+      let guard = 0;
+      do {
+        nx = 8 + Math.random() * (ancho - w - 16);
+        ny = 60 + Math.random() * (alto - h - 140);
+        const rYes = btnYes.getBoundingClientRect();
+        choca =
+          nx < rYes.right + 20 && nx + w > rYes.left - 20 &&
+          ny < rYes.bottom + 20 && ny + h > rYes.top - 20;
+        guard++;
+      } while (choca && guard < 25);
+
+      btnNo.style.left = nx + "px";
+      btnNo.style.top = ny + "px";
+    }
+
+    // en PC: huye al acercarse el mouse · en celular: al tocarlo
+    btnNo.addEventListener("pointerenter", huir);
+    btnNo.addEventListener("click", huir);
+
+    /* ============ SOBRE · abrir y expandir la carta ============ */
+    const envelope = document.getElementById("envelope");
+    const carta = document.getElementById("letter-paper");
+    const seal = document.getElementById("seal");
+
+    function abrirSobre() {
+      if (envelope.classList.contains("abierta")) return;
+      envelope.classList.add("abierta");
+      document.querySelector("#scene-letter .hint").textContent = "💌";
+      setTimeout(() => {
+        carta.classList.add("expandida");
+        sceneC.classList.add("expandida-final");
+        lluviaDeCorazones(25);
+      }, 950);
+    }
+    envelope.addEventListener("click", abrirSobre);
+  </script>
+</body>
+</html>

@@ -130,10 +130,61 @@ body {
     margin-right: 35px;
 }
 
+@keyframes fadelnUp{
+    from{
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(30px);
+    }
+}
+
+.seccion_oculta{
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out;
+transform: 0.8s ease-out;
+}
+
+.seccion_visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.imagen-derecha,.imagen-derecha-2,.imagen-derecha-3,.imagen-izquierda,.imagen-izquierda-2,.madre-seda{
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.imagen-derecha:hover,.imagen-derecha-2:hover,.imagen-derecha-3:hover,
+.imagen-izquierda:hover,.imagen-izquierda-2:hover,.madre-seda:hover{
+    transform: scale(1.03); 
+    box-shadow: 0 8px 25px rgba(255,255,255,0.2);
+}
+
+@keyframes latido{
+    0% {transform: scale(1);}
+    50%{transform: scale(1.02);}
+    100%{transform: scale(1);}
+}
+
+.Titulo h2{
+    display: inline-block;
+    animation: latido 3s infinite ease-in-out;
+}
+
+.top-bar{
+    animation: fadelnUp 1s ease-out;
+}
+
+
+
 
 /*
 colocar animacion, scroll, colocar scrip, 
-musica de fondo de pagina con controlador de volumen, links dinamicos, sub paginas (opcional).
+musica de fondo de pagina con controlador de volumen,
+ links dinamicos, sub paginas (opcional).
 
 link para video de fondo:
 https://www.youtube.com/watch?v=xZOzVq7X-b8

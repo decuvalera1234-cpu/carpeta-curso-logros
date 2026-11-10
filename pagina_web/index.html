@@ -23,10 +23,10 @@
     <div class="Titulo">
 
         <h2>PERSONAJES PRINCIPALES</h2>
-
+    <div></div>
     </div>
 
-     <section class="seccion-texto-imagen">
+     <section class="seccion-texto-imagen"><section class="seccion_oculta"></section><section class="seccion_visible"></section>
             <!-- El texto irá a la izquierda porque está primero -->
         <div class="bloque-texto">
             <h2>El Caballero de Hallownest</h2>
@@ -36,9 +36,9 @@
             <!-- La imagen irá a la derecha porque está de segunda -->
         <img src="img/caballeron.jpg" title="caballerito" alt="Caballero" class="imagen-derecha">
         
-     </section class="seccion-texto-imagen">
+     </section class="seccion-texto-imagen seccion_oculta">
 
-     <section class="seccion-texto-imagen">
+     <section class="seccion-texto-imagen"> <section class="seccion_oculta"></section><section class="seccion_visible"></section>
 
         <img src="img/Hornet-Hollow-Knight.jpg" title="Hornet" alt="Hornet" class="imagen-izquierda">
 
@@ -50,7 +50,7 @@
 
      </section>
 
-     <section class="seccion-texto-imagen">
+     <section class="seccion-texto-imagen"><section class="seccion_oculta"></section><section class="seccion_visible"></section>
 
         <div class="bloque-texto">
 
@@ -63,7 +63,7 @@
 
      </section>
 
-     <section class="seccion-texto-imagen">
+     <section class="seccion-texto-imagen"> <section class="seccion_oculta"></section><section class="seccion_visible"></section>
 
         <img src="img/Vasija-pura.jpg" title="Vasija Pura" alt="Vasija-pura" class="imagen-izquierda-2">
 
@@ -81,7 +81,7 @@
 
      </div>
 
-     <section class="seccion-texto-imagen">
+     <section class="seccion-texto-imagen"><section class="seccion_oculta"></section><section class="seccion_visible"></section>
 
         <div class="bloque-texto">
 
@@ -94,7 +94,7 @@
 
      </section>
 
-     <section class="seccion-texto-imagen">
+     <section class="seccion-texto-imagen"><section class="seccion_oculta"></section><section class="seccion_visible"></section>
 
 <img src="img/madre-seda.jpg" title="Madre Seda" alt="madre-seda" class="madre-seda">
 
@@ -106,6 +106,26 @@
         </div>
 
      </section>
-
+<script>
+    document.addEventListener("DOMContentLoaded",function(){
+        const secciones = document.querySelectorAll(".seccion_oculta");   
+        
+        const cargarseccion = (entrada,observador) =>{
+            entradas.forEach((entrada)=>{
+                if (entrada.islntersecting){
+                entrada.target.classlist.add("seccion_visible");
+                observador.unobserve(entrada.target);
+            }
+        });
+    };
+    const observador = new IntersectionObserver(cargarseccion,{
+        root: null, 
+        rootMargin: "0px 0px -50px 0px",threshold: 0.1
+        });
+    secciones.forEach((seccion)=>{
+        observador.observe(seccion);
+    });
+});       
+</script>
 </body>
 </html>
